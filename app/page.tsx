@@ -23,6 +23,10 @@ export default function SnakeGame() {
   const [score, setScore] = useState(0)
   const [gameStarted, setGameStarted] = useState(false)
 
+  const incrementScore = () => {
+    setScore(prevScore => prevScore + 1);
+  };
+
   // Generate random food position
   const generateFood = useCallback(() => {
     const newFood = {
@@ -99,7 +103,7 @@ export default function SnakeGame() {
         // Check if snake ate food
         if (head.x === food.x && head.y === food.y) {
           setFood(generateFood())
-          setScore((prevScore) => prevScore + 1)
+          incrementScore();
         } else {
           // Remove tail if no food was eaten
           newSnake.pop()
@@ -141,14 +145,15 @@ export default function SnakeGame() {
         >
           {/* Food */}
           <div
-            className="absolute rounded-full bg-red-500"
+            className="absolute"
             style={{
-              width: `${CELL_SIZE - 2}px`,
-              height: `${CELL_SIZE - 2}px`,
+              fontSize: `${CELL_SIZE}px`,
               left: `${food.x * CELL_SIZE}px`,
               top: `${food.y * CELL_SIZE}px`,
             }}
-          />
+          >
+            🍎
+          </div>
 
           {/* Snake */}
           {snake.map((segment, index) => (
